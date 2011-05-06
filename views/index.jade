@@ -1,0 +1,11 @@
+h1= title
+p Welcome to #{title}
+
+p= db.databaseName
+
+- each company in companies
+  .container
+    = company.name
+    br
+    = company.description
+    br
