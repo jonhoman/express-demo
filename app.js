@@ -44,8 +44,7 @@ app.get('/', function(req, res) {
       collection.find(function(err, cursor) {
         cursor.toArray(function(err, docs) {
           res.render('index', {
-            title: 'Express',
-            db: db,
+            title: 'Apprentice Us',
             companies: docs 
           });
           db.close();

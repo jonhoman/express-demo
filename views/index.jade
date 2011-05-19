@@ -1,11 +1,13 @@
 h1= title
 p Welcome to #{title}
 
-p= db.databaseName
-
 - each company in companies
   .container
-    = company.name
-    br
-    = company.description
-    br
+    .name
+      a(href=company.url)= company.name
+    .description= company.description
+
+    - if (company.apprentices.length != 0)
+      .apprentices Former #{company.name} apprentice(s):
+      - each apprentice in company.apprentices
+        li= apprentice
