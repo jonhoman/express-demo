@@ -41,13 +41,8 @@ app.get('/', function(req, res) {
 
   db.open(function(err, db) {
     db.collection('companies', function(err, collection) {
-      //sys.puts(sys.inspect(collection));
       collection.find(function(err, cursor) {
-        //sys.puts(sys.inspect(cursor));
-
         cursor.toArray(function(err, docs) {
-          sys.puts(sys.inspect(docs));
-
           res.render('index', {
             title: 'Express',
             db: db,
@@ -55,14 +50,6 @@ app.get('/', function(req, res) {
           });
           db.close();
        });
-
-      //collection.insert(
-        //[
-          //{ 'name': 'Obtiva', 'description': 'Get Started. Get Stronger. Get Smarter' },
-          //{ 'name': '8th Light', 'description': 'Quality software written by Craftsmen' }
-        //], function(docs) {
-          // empty callback
-        //}
       });
     });
   });
