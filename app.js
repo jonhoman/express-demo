@@ -6,7 +6,7 @@
 var express = require('express');
 var sys = require('sys');
 
-var app = module.exports = express.createServer();
+var app = express.createServer();
 
 // Mongo Setup
 var Db = require('mongodb').Db;
@@ -36,21 +36,26 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', function(req, res) {
+function loadCompanies(req, res, next) {
   var db = new Db('express-test', new Server('localhost', Connection.DEFAULT_PORT, {}), {native_parser:true});
 
   db.open(function(err, db) {
     db.collection('companies', function(err, collection) {
       collection.find(function(err, cursor) {
         cursor.toArray(function(err, docs) {
-          res.render('index', {
-            title: 'Apprentice Us',
-            companies: docs 
-          });
+          req.companies = docs;
           db.close();
-       });
+          next();
+        });
       });
     });
+  });
+}
+
+app.get('/', loadCompanies, function(req, res) {
+  res.render('index', {
+    title: 'Apprentice Us',
+    companies: req.companies
   });
 });
 
